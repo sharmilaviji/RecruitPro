@@ -38,15 +38,19 @@ label="Your Name*" />
     </form>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
-    data () {
+
+
+data () {
     return {
         formData: {
       text: ''
         }
     }
   },
-    data () {
+  props: ['tab'],
+data () {
     return {
         formData: {
       email: '',
@@ -55,6 +59,7 @@ export default {
     }
   } ,
   methods: {
+      ...mapActions('auth',['registerUser']),
       isValidEmailAddress(email){
  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -62,15 +67,25 @@ export default {
      submitform(){
          this.$refs.email.validate()
          this.$refs.password.validate()
-         if(!this.$refs.email,hasError && !this.$refs.password.hasError){
-             if(this.tab == 'signin'){
-               console.log('login the user')  
-             }
-             else{
-             console.log('signin the user')
-             }
+         if(!this.$refs.email.hasError && !this.$refs.password.hasError){
+      if (this.tab == 'signin')
+      {
+        console.log('signin')
+         
+      }
+      else{
+        this.registerUser(this.formData)
+      }
+     
+     
          }
       }
+  },
+  filters: {
+    titleCase(value){
+      return value.charAt(0).toUpperCase() + value.slice(1)
+
+    }
   }
 }
 </script>

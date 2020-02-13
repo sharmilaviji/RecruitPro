@@ -1,12 +1,22 @@
-import state from './state'
-import * as getters from './getters'
-import * as mutations from './mutations'
-import * as actions from './actions'
+import Vue from 'vue'
+import Vuex from 'vuex'
+import store from './store'
+import auth from './store-auth'
 
-export default {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions
+Vue.use(Vuex)
+
+export default function(){
+  const Store = new Vuex.Store({
+    modules: {
+    
+      //then we reference it
+  auth,
+  store
+    },
+    strict: process.env.DEV
+  })
+  
+  return Store
+ 
+  
 }
